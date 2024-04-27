@@ -1,0 +1,36 @@
+name: Main Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-development:
+    name: Deploy to Development
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    environment: staging
+    needs: [deploy-development]
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [deploy-staging]
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
